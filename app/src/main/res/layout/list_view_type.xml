@@ -5,6 +5,8 @@
     android:id="@+id/listView_label"
     android:textSize="20sp"
     android:padding="10dp"
+    android:layout_margin="10dp"
+    android:background="@color/listColor"
     android:textStyle="bold"
     >
 

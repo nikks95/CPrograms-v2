@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#ffffff</color>
+    <color name="listColor">#e990acf9</color>
     <color name="borderColor">#4b599f</color>
     <color name="outputBorderColor">#dcd7d7</color>
     <color name="outputBorderColor2">#b4b1b1</color>
