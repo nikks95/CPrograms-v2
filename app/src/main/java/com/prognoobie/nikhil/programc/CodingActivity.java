@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,6 +21,8 @@ public class CodingActivity extends AppCompatActivity {
 
     static ArrayList<String> al;
     ArrayList<String> listArray = null;
+    ProgramWriter writer;
+    String[] program = new String[3];
 
 
     @Override
@@ -27,11 +30,56 @@ public class CodingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coding);
         //ListView
-        ListView listView = (ListView) findViewById(R.id.programList);
+        if(al!=null)
+        {
+            al.clear();
+        }
+        if(listArray!=null)
+        {
+            listArray.clear();
+        }
+        final ListView listView = (ListView) findViewById(R.id.programList);
         listArray = this.getListPrograms();
-        LinearLayout codingLayout = (LinearLayout) findViewById(R.id.coding_program);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.list_view_type,listArray);
+        final LinearLayout codingLayout = (LinearLayout) findViewById(R.id.coding_program);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.list_view_type,listArray);
         listView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+        final TextView header= (TextView) findViewById(R.id.program_header);
+        final TextView mainProgram = (TextView) findViewById(R.id.program_main);
+        final TextView outPut= (TextView) findViewById(R.id.program_output);
+
+        header.setText("");
+        mainProgram.setText("");
+        outPut.setText("");
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                String item = listView.getItemAtPosition(position).toString();
+                Toast.makeText(CodingActivity.this,"You selected : " + item,Toast.LENGTH_SHORT).show();
+
+                writer=new ProgramWriter(CodingActivity.this);
+
+                listView.setVisibility(View.GONE);
+                codingLayout.setVisibility(View.VISIBLE);
+
+                try {
+                    program =writer.getProgram(CodingActivity.this.getAssets().open("Programs/"+item),item);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                header.setText(program[0]);
+                mainProgram.setText(program[1]);
+                outPut.setText(program[2]);
+
+
+            }
+        });
 
 
     }
