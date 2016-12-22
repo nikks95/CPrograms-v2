@@ -12,24 +12,16 @@
 
 
 
-    <Button
-        android:layout_width="wrap_content"
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="30sp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:text="Search Program"
+        android:text="C Programs"
         android:id="@+id/coding_search"/>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:layout_toLeftOf="@+id/coding_search"
-        android:text="Search"
-        android:layout_alignBottom="@+id/coding_search"
-        android:id="@+id/coding_searchBar" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
