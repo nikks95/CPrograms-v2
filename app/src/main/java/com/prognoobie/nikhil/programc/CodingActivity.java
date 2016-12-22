@@ -20,7 +20,7 @@ public class CodingActivity extends AppCompatActivity {
 
     static ArrayList<String> al;
     ArrayList<String> listArray = null;
-    String searchString;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
