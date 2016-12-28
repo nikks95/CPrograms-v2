@@ -146,9 +146,9 @@ public class CodingActivity extends AppCompatActivity {
         try {
             String[] listOfPrograms = this.getAssets().list("Programs");
             for(int i=0;i<listOfPrograms.length;i++)
-            {
-                al.add(listOfPrograms[i]);
-                arrayList.add(listOfPrograms[i]);
+            {   if(!listOfPrograms[i].equals("Quesans"))
+            {al.add(listOfPrograms[i]);
+                arrayList.add(listOfPrograms[i]);}
             }
         } catch (IOException e) {
             e.printStackTrace();

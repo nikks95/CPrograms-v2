@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Nikhil on 12/22/2016.
@@ -70,6 +71,36 @@ public class ProgramWriter {
         return arg;
     }
 
+    ArrayList<String> getQuesAns(InputStream inputStream)
+    {
+        ArrayList<String> al = new ArrayList<>();
+        String line;
+        StringBuilder text =new StringBuilder();
+
+        try{
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            while((line=reader.readLine())!=null){
+                if(line.equals("***************************************")||line.equals("========================================"))
+                {
+                    al.add(text.toString());
+                    text = new StringBuilder();
+
+                }
+                else {
+                    text.append(line);
+                    text.append('\n');
+                }
+
+            }
+
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            al.add("NULL OUTPUT");
+        }
+
+        return al;
+    }
 
     public static void setProgID(int id)
     {

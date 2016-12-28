@@ -9,5 +9,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/parent_text"
         android:fontFamily="serif-monospace"
-        android:textSize="24sp" />
+        android:padding="5dp"
+        android:layout_margin="10dp"
+        android:textSize="24sp"
+        android:background="@drawable/ques_border"/>
 </LinearLayout>
