@@ -1,0 +1,60 @@
+Ques1. What is C?
+***************************************
+Ans. C is a general-purpose, imperative computer programming language, supporting structured programming, lexical variable scope and recursion, while a static type system prevents many unintended operations. By design, C provides constructs that map efficiently to typical machine instructions, and therefore it has found lasting use in applications that had formerly been coded in assembly language, including operating systems, as well as various application software for computers ranging from supercomputers to embedded systems.
+========================================
+Ques2. What are the types of C constants?
+***************************************
+Ans. C constants can be divide into two major categories:
+        1. Primary Constants
+            a. Integer
+            b. Real
+            c. Float
+        2. Secondary Constants
+            a. Array
+            b. Pointer
+            c. Structure
+            d. Union
+            e. Enum
+========================================
+Ques3. What is Keyword in C?
+***************************************
+Ans. Keywords are the words whose meaning has already been explained to the C compiler. Keyword cannot be used as Variable names because if we do so we are trying to assign a new meaning to keyword, which is not allowed.
+Example:- int, char, break, while etc
+========================================
+Ques4. What is Variable in C?
+***************************************
+Ans. A variable is nothing but a name given to a storage area that our programs can manipulate. Each variable in C has a specific type, which determines the size and layout of the variable's memory; the range of values that can be stored within that memory; and the set of operations that can be applied to the variable.
+========================================
+Ques5. What is main()?
+***************************************
+Ans. main() forms the crucial part of any C program. main() is a function which is searched by the compiler first to start the execution or we can say main() is the first function in c which is executed.
+========================================
+Ques6. What is printf()?
+***************************************
+Ans. C does not contain any instruction to display output to the screen. All output to screen is achieved using readymade library function printf(), printf is the part of stdio.h file (so to use printf always write #include<stdio.h> above of program).
+
+  General form of printf()
+
+  printf("<format String>",<list of variables>);
+
+  <format String> can contain,
+   %f for printing Real values
+   %d for printing Integer values
+   %c for printing Character values
+========================================
+Ques7. What are the different types of Instructions in C?
+***************************************
+Ans. Types of Instruction in C are:
+        1. Type Declaration Instruction
+            ex:- int num;
+        2. Arithmetic Instruction
+            ex:- c = a+b;
+        3. Control Instruction
+            ex:- main(){
+                        sum(a,b);
+                       }
+                 sum(int a, int b){
+                        int c = a+b;
+                        printf("%d",c);
+                    }
+========================================
