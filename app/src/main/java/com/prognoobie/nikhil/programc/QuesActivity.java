@@ -28,6 +28,7 @@ public class QuesActivity extends AppCompatActivity {
     static String fileName ="";
 
     ProgramWriter writer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,18 +78,11 @@ public class QuesActivity extends AppCompatActivity {
     }
 
 
-
-
-
     void fillData(ArrayList<String> al)
     {
-        ques = new ArrayList<String>();
-        ans = new HashMap<String,List<String>>();
-        //ques.add("Hello");
-       /* List<String> list = new ArrayList<>();
-        list.add("YO");
-        ans.put(ques.get(0),list);
-        */
+        ques = new ArrayList<>();
+        ans = new HashMap<>();
+
         for(int i=0;i<al.size();i++)
         {
             if(i%2==0)

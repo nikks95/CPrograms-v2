@@ -1,11 +1,15 @@
 package com.prognoobie.nikhil.programc;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.util.Linkify;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.ttoolbar);
         final ImageView logoImage = (ImageView) findViewById(R.id.main_logo);
         ImageView codingImage = (ImageView) findViewById(R.id.main_coding);
         ImageView quesImage = (ImageView) findViewById(R.id.main_quesans);
@@ -65,8 +69,24 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "https://github.com/nikks95/CPrograms-v2 ,for Code of this app", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                final SpannableString s = new SpannableString("https://github.com/nikks95/CPrograms-v2");
+                Linkify.addLinks(s, Linkify.WEB_URLS);
+
+                String header = "Watch Source code at @github ";
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle(header)
+                        .setMessage(s)
+
+//
+                        .setNegativeButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setIcon(R.drawable.but)
+                        .show();
+
+
             }
         });
     }
@@ -89,7 +109,18 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.share) {
+           String total_data  = "https://github.com/nikks95/CPrograms-v2";
+            Intent sharewhatsappIntent = new Intent(Intent.ACTION_SEND);
+            sharewhatsappIntent.setType("text/plain");
+            sharewhatsappIntent.setPackage("com.whatsapp");
+            sharewhatsappIntent.putExtra(Intent.EXTRA_TEXT, total_data);
+
+            try {
+                startActivity(sharewhatsappIntent);
+            } catch (android.content.ActivityNotFoundException ex) {
+
+            }
             return true;
         }
 

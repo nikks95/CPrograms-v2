@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#00838f</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#0092a3</color>
     <color name="white">#ffffff</color>
-    <color name="listColor">#e990acf9</color>
+    <color name="listColor">#11c2d2</color>
     <color name="borderColor">#4b599f</color>
     <color name="outputBorderColor">#dcd7d7</color>
     <color name="outputBorderColor2">#b4b1b1</color>
     <color name="black">#000000</color>
     <color name="quescolor">#dfdada</color>
+    <color name="appbackground">#befff4</color>
 </resources>

@@ -1,7 +1,11 @@
 package com.prognoobie.nikhil.programc;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -38,6 +42,10 @@ public class CodingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coding);
+
+      //  Toolbar toolbar = (Toolbar)findViewById(R.id.ttoolbar);
+       // setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("PROGRAMS");
         //ListView
         if(al!=null)
         {
@@ -52,6 +60,7 @@ public class CodingActivity extends AppCompatActivity {
 
         final LinearLayout codingLayout = (LinearLayout) findViewById(R.id.coding_program);
         final ImageView downloadImage = (ImageView) findViewById(R.id.download_code);
+        final TextView textView = (TextView) findViewById(R.id.coding_search);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.list_view_type,listArray);
 
@@ -78,6 +87,8 @@ public class CodingActivity extends AppCompatActivity {
                 writer=new ProgramWriter(CodingActivity.this);
 
                 downloadImage.setVisibility(View.VISIBLE);
+                textView.setVisibility(View.VISIBLE);
+                textView.setText("Download Program");
                 listView.setVisibility(View.GONE);
                 codingLayout.setVisibility(View.VISIBLE);
 
@@ -91,7 +102,7 @@ public class CodingActivity extends AppCompatActivity {
                 header.setText(program[0]);
                 mainProgram.setText(program[1]);
                 outPut.setText(program[2]);
-                filename=program[0]+".c";
+
                 str=program[1];
 
             }
@@ -99,40 +110,74 @@ public class CodingActivity extends AppCompatActivity {
        downloadImage.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               if(!downloadFlag) {
-                   Toast.makeText(CodingActivity.this, "Press once more to download C file", Toast.LENGTH_LONG).show();
-                    downloadFlag = true;
-               }
-                   else
-               {
-                   downloadFlag=false;
+
+               LayoutInflater li = LayoutInflater.from(CodingActivity.this);
+               View promptsView = li.inflate(R.layout.prompts, null);
+
+               AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                       CodingActivity.this);
+
+               // set prompts.xml to alertdialog builder
+               alertDialogBuilder.setView(promptsView);
+
+               final EditText userInput = (EditText) promptsView
+                       .findViewById(R.id.editTextDialogUserInput);
+
+               // set dialog message
+               alertDialogBuilder
+                       .setCancelable(false)
+                       .setPositiveButton("OK",
+                               new DialogInterface.OnClickListener() {
+                                   public void onClick(DialogInterface dialog,int id) {
+                                       // get user input and set it to result
+                                       // edit text
+                                      filename= userInput.getText().toString();
+                                       File mydir = new File("/sdcard/CPrograms/"); //Creating an internal dir;
+                                       if (!mydir.exists())
+                                       {
+                                           mydir.mkdirs();
+                                           Toast.makeText(CodingActivity.this, "Directory created",
+                                                   Toast.LENGTH_SHORT).show();
+                                       }
+
+                                       try{
+                                           filename = filename+".c";
+                                           File cFile = new File(mydir, filename);
+                                           FileWriter writer = new FileWriter(cFile);
+                                           writer.append(str);
+                                           writer.flush();
+                                           writer.close();
+                                           Toast.makeText(CodingActivity.this, "File saved successfully!",
+                                                   Toast.LENGTH_LONG).show();
+
+                                       }catch (Exception e){
+
+                                       }
+                                   }
+                               })
+                       .setNegativeButton("Cancel",
+                               new DialogInterface.OnClickListener() {
+                                   public void onClick(DialogInterface dialog,int id) {
+                                       dialog.cancel();
+                                   }
+                               });
+
+               // create alert dialog
+               AlertDialog alertDialog = alertDialogBuilder.create();
+
+               // show it
+               alertDialog.show();
 
 
-                   File mydir = new File("/sdcard/CPrograms/"); //Creating an internal dir;
-                   if (!mydir.exists())
-                   {
-                       mydir.mkdirs();
-                       Toast.makeText(CodingActivity.this, "Directory created",
-                               Toast.LENGTH_SHORT).show();
-                   }
-
-                   try{
-                       File cFile = new File(mydir, filename);
-                       FileWriter writer = new FileWriter(cFile);
-                       writer.append(str);
-                       writer.flush();
-                       writer.close();
-                       Toast.makeText(CodingActivity.this, "File saved successfully!",
-                               Toast.LENGTH_LONG).show();
-
-                   }catch (Exception e){
-
-                   }
 
 
 
 
-               }
+
+
+
+
+
            }
        });
     }
