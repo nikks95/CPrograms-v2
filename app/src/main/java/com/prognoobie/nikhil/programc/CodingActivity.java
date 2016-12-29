@@ -1,6 +1,7 @@
 package com.prognoobie.nikhil.programc;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -61,6 +62,7 @@ public class CodingActivity extends AppCompatActivity {
         final LinearLayout codingLayout = (LinearLayout) findViewById(R.id.coding_program);
         final ImageView downloadImage = (ImageView) findViewById(R.id.download_code);
         final TextView textView = (TextView) findViewById(R.id.coding_search);
+        final ImageView shareImage = (ImageView) findViewById(R.id.share_code);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.list_view_type,listArray);
 
@@ -88,9 +90,10 @@ public class CodingActivity extends AppCompatActivity {
 
                 downloadImage.setVisibility(View.VISIBLE);
                 textView.setVisibility(View.VISIBLE);
-                textView.setText("Download Program");
+                textView.setText("Share and Download Program");
                 listView.setVisibility(View.GONE);
                 codingLayout.setVisibility(View.VISIBLE);
+                shareImage.setVisibility(View.VISIBLE);
 
                 try {
                     program =writer.getProgram(CodingActivity.this.getAssets().open("Programs/"+item),item);
@@ -105,6 +108,22 @@ public class CodingActivity extends AppCompatActivity {
 
                 str=program[1];
 
+            }
+        });
+        shareImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String total_data  = str;
+                Intent sharewhatsappIntent = new Intent(Intent.ACTION_SEND);
+                sharewhatsappIntent.setType("text/plain");
+                sharewhatsappIntent.setPackage("com.whatsapp");
+                sharewhatsappIntent.putExtra(Intent.EXTRA_TEXT, total_data);
+
+                try {
+                    startActivity(sharewhatsappIntent);
+                } catch (android.content.ActivityNotFoundException ex) {
+
+                }
             }
         });
        downloadImage.setOnClickListener(new View.OnClickListener() {
