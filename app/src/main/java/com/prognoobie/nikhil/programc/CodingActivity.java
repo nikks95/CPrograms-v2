@@ -23,14 +23,18 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 public class CodingActivity extends AppCompatActivity {
 
     static ArrayList<String> al;
+    ArrayList al1;
     static String filename="";
     static String str = "";
+    Map<String,List<String>> map;
     ArrayList<String> listArray = null;
     ProgramWriter writer;
 
@@ -67,6 +71,8 @@ public class CodingActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.list_view_type,listArray);
 
         listView.setAdapter(adapter);
+        al1 = searchPrograms(listArray,"even");
+        System.out.println(al1);
 
         adapter.notifyDataSetChanged();
 
@@ -201,18 +207,85 @@ public class CodingActivity extends AppCompatActivity {
        });
     }
 
+    ArrayList<String> searchPrograms(ArrayList<String> list,String searchedKeywords)
+    {
+        String token;
+        boolean flag=false;
+        String programName;
+        ArrayList<String> matchedPrograms = new ArrayList<>();
+        ArrayList<String> al;
+        map = new HashMap<>();
+        for(int i=0;i<list.size();i++)
+        {   al = new ArrayList<>();
+            programName = list.get(i);
+            System.out.println(list.get(i));
 
+            StringTokenizer st =  new StringTokenizer(programName," ");
+            while(st.hasMoreTokens())
+            { token= st.nextToken();
+                al.add(token.toUpperCase());
+               // System.out.println(token+" ADDING");
+            }
+            map.put(programName,al);
+
+        }
+        StringTokenizer stringTokenizer = new StringTokenizer(searchedKeywords," ");
+        while(stringTokenizer.hasMoreTokens())
+        {
+            token=stringTokenizer.nextToken();
+            for(int i=0;i<map.size();i++) {
+                al = new ArrayList<>();
+
+                al = (ArrayList<String>) map.get(list.get(i));
+                if (al.contains(token.toUpperCase()))
+                {  // System.out.println(token+al+map.keySet().toArray()[i]+i);
+                    matchedPrograms.add(list.get(i));
+                    flag = true;
+                }
+                else continue;
+            }
+        }
+
+
+    if(flag)
+        return matchedPrograms;
+else {
+        matchedPrograms.add("Nothing");
+        return matchedPrograms;
+    }
+    }
 
     //Array for ListView
     ArrayList<String>  getListPrograms()
-    {   al = new ArrayList<>();
+    {
+        al = new ArrayList<>();
+       // int index;
+        String item;
+
         ArrayList<String> arrayList = new ArrayList<>();
         try {
             String[] listOfPrograms = this.getAssets().list("Programs");
+            String[] indexesOfPrograms = new String[listOfPrograms.length];
+
             for(int i=0;i<listOfPrograms.length;i++)
-            {   if(!listOfPrograms[i].equals("Quesans"))
-            {al.add(listOfPrograms[i]);
-                arrayList.add(listOfPrograms[i]);}
+            {
+                int index;
+                item = listOfPrograms[i];
+                if(listOfPrograms[i].equals("Quesans")){
+                    index = listOfPrograms.length-1;
+                }
+                else{index =ProgramWriter.getIndex(CodingActivity.this.getAssets().open("Programs/"+item));
+                }
+                indexesOfPrograms[index]=listOfPrograms[i];
+            }
+
+
+            for(int i=0;i<indexesOfPrograms.length;i++)
+            {   if(!indexesOfPrograms[i].equals("Quesans"))
+                     {
+                           al.add(indexesOfPrograms[i]);
+                            arrayList.add(indexesOfPrograms[i]);
+                     }
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -45,19 +45,25 @@ public class ProgramWriter {
 
 
             while ((line = reader.readLine()) != null) {
-                if(line.length()>1 && (line.charAt(0)=='~'|| !writerFlag))
-                {
-                    writerFlag=false;
-                    text2.append(line);
-                    text2.append('\n');
-                }
 
-                else{
-                    writerFlag = true;
-                    text1.append(line);
-                    text1.append('\n');}
+                    if(!line.equals("====")){
+                        if(line.length()>1 && (line.charAt(0)=='~'|| !writerFlag))
+                           {
+                                writerFlag=false;
+                                text2.append(line);
+                                text2.append('\n');
+                           }
 
-            }
+                        else{
+                                writerFlag = true;
+                                text1.append(line);
+                                text1.append('\n');}}
+
+                    else
+                        {
+                            break;
+                        }
+                            }
             reader.close();
 
 
@@ -71,6 +77,37 @@ public class ProgramWriter {
         return arg;
     }
 
+    static int getIndex(InputStream inputStream){
+        int index=0;
+        String line;
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+           boolean getInt=false;
+
+
+            while ((line = reader.readLine()) != null) {
+             if(line.equals("===="))
+             {
+                 getInt = true;
+
+             }
+                if(getInt&&!line.equals("====")){
+                    index=Integer.parseInt(line);
+                }
+
+            }
+            reader.close();
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return index;
+
+    }
     ArrayList<String> getQuesAns(InputStream inputStream)
     {
         ArrayList<String> al = new ArrayList<>();

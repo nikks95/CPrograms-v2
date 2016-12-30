@@ -12,3 +12,5 @@ int main()
 ~Output
 Enter a character: G
 ASCII value of G = 71
+====
+1
