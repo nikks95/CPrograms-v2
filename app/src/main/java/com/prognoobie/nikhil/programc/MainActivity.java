@@ -23,7 +23,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.ttoolbar);
+
         final ImageView logoImage = (ImageView) findViewById(R.id.main_logo);
         ImageView codingImage = (ImageView) findViewById(R.id.main_coding);
         ImageView quesImage = (ImageView) findViewById(R.id.main_quesans);
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         logoImage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                final Animation an  = AnimationUtils.loadAnimation(getBaseContext(),R.anim.rotate);
+                final Animation an  = AnimationUtils.loadAnimation(getBaseContext(),R.anim.fastrotate);
                 logoImage.startAnimation(an);
             }
         });

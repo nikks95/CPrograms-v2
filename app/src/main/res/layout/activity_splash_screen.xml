@@ -8,9 +8,9 @@
     android:background="@color/colorAccent"
     tools:context="com.prognoobie.nikhil.programc.SplashScreen">
 <TextView
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="     C Programs"
+    android:text="Programs"
     android:textColor="#FFFFFF"
     android:textSize="50sp"
     android:layout_centerHorizontal="true"
