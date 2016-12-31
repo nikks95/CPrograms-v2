@@ -2,6 +2,7 @@ package com.prognoobie.nikhil.programc;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,7 +32,7 @@ import java.util.StringTokenizer;
 public class CodingActivity extends AppCompatActivity {
 
     static ArrayList<String> al;
-    ArrayList al1;
+    ArrayList<String> al1=null;
     static String filename="";
     static String str = "";
     Map<String,List<String>> map;
@@ -63,6 +64,9 @@ public class CodingActivity extends AppCompatActivity {
         final ListView listView = (ListView) findViewById(R.id.programList);
         listArray = this.getListPrograms();
 
+
+        final EditText searchText = (EditText) findViewById(R.id.search_bar);
+        final ImageView searchImage = (ImageView) findViewById(R.id.searchProg);
         final LinearLayout codingLayout = (LinearLayout) findViewById(R.id.coding_program);
         final ImageView downloadImage = (ImageView) findViewById(R.id.download_code);
         final TextView textView = (TextView) findViewById(R.id.coding_search);
@@ -71,7 +75,7 @@ public class CodingActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.list_view_type,listArray);
 
         listView.setAdapter(adapter);
-        al1 = searchPrograms(listArray,"even");
+
         System.out.println(al1);
 
         adapter.notifyDataSetChanged();
@@ -83,8 +87,34 @@ public class CodingActivity extends AppCompatActivity {
         header.setText("");
         mainProgram.setText("");
         outPut.setText("");
+        searchText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchText.setText("");
+            }
+        });
 
+        searchImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String searchString  = searchText.getText().toString();
+                if(searchString.equals(""))
+                {
+                    al1=listArray;
+                }
+                else
+                {
+                    al1 = searchPrograms(listArray,searchString);
 
+                }
+                ArrayAdapter adapter1 = new ArrayAdapter<>(CodingActivity.this,R.layout.list_view_type,al1);
+
+                listView.setAdapter(adapter1);
+
+                adapter1.notifyDataSetChanged();
+
+            }
+        });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -100,6 +130,8 @@ public class CodingActivity extends AppCompatActivity {
                 listView.setVisibility(View.GONE);
                 codingLayout.setVisibility(View.VISIBLE);
                 shareImage.setVisibility(View.VISIBLE);
+                searchImage.setVisibility(View.GONE);
+                searchText.setVisibility(View.GONE);
 
                 try {
                     program =writer.getProgram(CodingActivity.this.getAssets().open("Programs/"+item),item);

@@ -19,6 +19,25 @@
         android:text="C Programs"
         android:visibility="gone"
         android:id="@+id/coding_search"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLength="40"
+        android:id="@+id/search_bar"
+        android:visibility="visible"
+        android:text="type program to be searched here"
+        android:layout_below="@+id/coding_search"
+        android:layout_toEndOf="@+id/coding_search"
+        android:layout_toRightOf="@+id/coding_search" />
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:visibility="visible"
+        android:src="@drawable/search"
+        android:id="@+id/searchProg"
+        android:layout_toRightOf="@+id/search_bar"
+        android:layout_alignParentRight="true"/>
 
 
     <LinearLayout
@@ -26,20 +45,22 @@
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
 
-        android:layout_below="@+id/coding_search"
+        android:layout_below="@+id/search_bar"
 
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:orientation="horizontal">
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/programList"
-        android:visibility="visible"
-        android:layout_marginTop="10dp"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="10.0sp"
-        />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/programList"
+            android:visibility="visible"
+            android:layout_marginTop="10dp"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="10.0sp"
+            />
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
