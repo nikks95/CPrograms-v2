@@ -26,3 +26,5 @@ Size of double = 8 bytes
 Size of long double = 16 bytes
 ====
 5
+****
+sizeof size of long

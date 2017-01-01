@@ -77,6 +77,7 @@ public class ProgramWriter {
         return arg;
     }
 
+
     static int getIndex(InputStream inputStream){
         int index=0;
         String line;
@@ -93,6 +94,7 @@ public class ProgramWriter {
              }
                 if(getInt&&!line.equals("====")){
                     index=Integer.parseInt(line);
+                    getInt = false;
                 }
 
             }
@@ -108,6 +110,39 @@ public class ProgramWriter {
         return index;
 
     }
+    String getKeyWords(InputStream inputStream)
+    {
+        String keyword="";
+        String line;
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            boolean getKey=false;
+
+
+            while ((line = reader.readLine()) != null) {
+                if(line.equals("****"))
+                {
+                    getKey = true;
+
+                }
+                if(getKey&&!line.equals("****")){
+                    keyword =line;
+                    getKey = false;
+                }
+
+            }
+            reader.close();
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return keyword;
+    }
+
     ArrayList<String> getQuesAns(InputStream inputStream)
     {
         ArrayList<String> al = new ArrayList<>();

@@ -10,7 +10,10 @@
 
 
 
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/relLay">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +27,8 @@
         android:layout_height="wrap_content"
         android:maxLength="40"
         android:id="@+id/search_bar"
-        android:visibility="visible"
+        android:maxLines="1"
+        android:singleLine="true"
         android:text="type program to be searched here"
         android:layout_below="@+id/coding_search"
         android:layout_toEndOf="@+id/coding_search"
@@ -39,13 +43,33 @@
         android:layout_toRightOf="@+id/search_bar"
         android:layout_alignParentRight="true"/>
 
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:visibility="gone"
+        android:id="@+id/share_code"
+        android:src="@drawable/share"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/coding_search"
+        android:layout_toEndOf="@+id/coding_search" />
+    />
 
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:visibility="gone"
+        android:id="@+id/download_code"
+        android:src="@drawable/downloadfile"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/share_code"
+        android:layout_toEndOf="@+id/share_code" />
+</RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
 
-        android:layout_below="@+id/search_bar"
+        android:layout_below="@+id/relLay"
 
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -68,69 +92,49 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true">
 
-        <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        android:orientation="vertical"
-        android:id="@+id/coding_program">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/program_header"
-            android:textSize="25sp"
-            android:text="Header"
-            android:padding="5dp"
-            android:layout_marginTop="10dp"
-            android:textStyle="bold"
-            android:background="@color/borderColor"
-            android:textColor="@color/white"
-               />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:id="@+id/program_main"
-            android:padding="20dp"
-            android:textSize="15sp"
-            android:background="@drawable/my_border"
-            android:textStyle="bold"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/program_output"
-            android:layout_marginTop="10dp"
-            android:padding="10dp"
-            android:textSize="15dp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:background="@drawable/output_border"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:orientation="vertical"
+                android:id="@+id/coding_program">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/program_header"
+                    android:textSize="25sp"
+                    android:text="Header"
+                    android:padding="5dp"
+                    android:layout_marginTop="10dp"
+                    android:textStyle="bold"
+                    android:background="@color/borderColor"
+                    android:textColor="@color/white"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/program_main"
+                    android:padding="20dp"
+                    android:textSize="15sp"
+                    android:background="@drawable/my_border"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/program_output"
+                    android:layout_marginTop="10dp"
+                    android:padding="10dp"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:background="@drawable/output_border"/>
 
 
-    </LinearLayout>
+            </LinearLayout>
         </ScrollView>
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="40dp"
-        android:visibility="gone"
-        android:id="@+id/share_code"
-        android:src="@drawable/share"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/coding_search"
-        android:layout_toEndOf="@+id/coding_search" />
-    />
-
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="40dp"
-        android:visibility="gone"
-        android:id="@+id/download_code"
-        android:src="@drawable/downloadfile"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/share_code"
-        android:layout_toEndOf="@+id/share_code" />
 
 
 </RelativeLayout>

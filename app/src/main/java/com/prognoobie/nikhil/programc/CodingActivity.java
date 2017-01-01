@@ -7,6 +7,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.method.KeyListener;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -42,6 +45,7 @@ public class CodingActivity extends AppCompatActivity {
     String[] program = new String[3];
 
     boolean downloadFlag= false;
+    boolean searchBarVisibilityFlag = false;
 
 
     @Override
@@ -66,13 +70,16 @@ public class CodingActivity extends AppCompatActivity {
 
 
         final EditText searchText = (EditText) findViewById(R.id.search_bar);
+        searchText.setVisibility(View.GONE);
+        //searchText.setTag(searchText.getKeyListener());
+        //searchText.setKeyListener(null);
         final ImageView searchImage = (ImageView) findViewById(R.id.searchProg);
         final LinearLayout codingLayout = (LinearLayout) findViewById(R.id.coding_program);
         final ImageView downloadImage = (ImageView) findViewById(R.id.download_code);
         final TextView textView = (TextView) findViewById(R.id.coding_search);
         final ImageView shareImage = (ImageView) findViewById(R.id.share_code);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.list_view_type,listArray);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.list_view_type,listArray);
 
         listView.setAdapter(adapter);
 
@@ -84,37 +91,46 @@ public class CodingActivity extends AppCompatActivity {
         final TextView mainProgram = (TextView) findViewById(R.id.program_main);
         final TextView outPut= (TextView) findViewById(R.id.program_output);
 
+
         header.setText("");
         mainProgram.setText("");
         outPut.setText("");
+        //*************** **************** **************** **************** ******************* ************
         searchText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(searchText.getText().toString().equals("type program to be searched here"))
                 searchText.setText("");
             }
         });
-
+        //* ********************** ***************** ****************** ****************** ******************
         searchImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String searchString  = searchText.getText().toString();
-                if(searchString.equals(""))
-                {
-                    al1=listArray;
+                if(searchBarVisibilityFlag) {
+                  searchList(searchText,listView,listArray);
                 }
                 else
                 {
-                    al1 = searchPrograms(listArray,searchString);
-
+                    searchBarVisibilityFlag=true;
+                    searchText.setVisibility(View.VISIBLE);
                 }
-                ArrayAdapter adapter1 = new ArrayAdapter<>(CodingActivity.this,R.layout.list_view_type,al1);
-
-                listView.setAdapter(adapter1);
-
-                adapter1.notifyDataSetChanged();
-
             }
         });
+        //* ******************* *  * * * * * * * ****************************************** * * * * * *******
+        searchText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if(i==keyEvent.KEYCODE_ENTER)
+                {
+                    searchList(searchText,listView,listArray);
+                }
+                return true;
+            }
+        });
+
+
+       //***** ********** * * * * * * * * * * * ********************* ** * * * * *  **************************
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -148,22 +164,58 @@ public class CodingActivity extends AppCompatActivity {
 
             }
         });
+
+        //************************** * ************************* ** ********************* *** *************
         shareImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String total_data  = str;
-                Intent sharewhatsappIntent = new Intent(Intent.ACTION_SEND);
-                sharewhatsappIntent.setType("text/plain");
-                sharewhatsappIntent.setPackage("com.whatsapp");
-                sharewhatsappIntent.putExtra(Intent.EXTRA_TEXT, total_data);
 
-                try {
-                    startActivity(sharewhatsappIntent);
-                } catch (android.content.ActivityNotFoundException ex) {
+                LayoutInflater li = LayoutInflater.from(CodingActivity.this);
+                View promptsView = li.inflate(R.layout.shareprompt, null);
 
-                }
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        CodingActivity.this);
+
+                // set prompts.xml to alertdialog builder
+                alertDialogBuilder.setView(promptsView);
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        // get user input and set it to result
+                                        // edit text
+                                        String total_data  = str;
+                                        Intent sharewhatsappIntent = new Intent(Intent.ACTION_SEND);
+                                        sharewhatsappIntent.setType("text/plain");
+                                        sharewhatsappIntent.setPackage("com.whatsapp");
+                                        sharewhatsappIntent.putExtra(Intent.EXTRA_TEXT, total_data);
+
+                                        try {
+                                            startActivity(sharewhatsappIntent);
+                                        } catch (android.content.ActivityNotFoundException ex) {
+
+                                        }
+
+                                    }
+                                })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                // show it
+                alertDialog.show();
+
             }
         });
+
+        //************************ ****** ************************** *********** ************************** *****************
        downloadImage.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
@@ -225,34 +277,44 @@ public class CodingActivity extends AppCompatActivity {
                // show it
                alertDialog.show();
 
-
-
-
-
-
-
-
-
-
-
            }
        });
     }
 
+//***************************************************************************************************************************************************************************
+
+
+
+    // search programs list function
     ArrayList<String> searchPrograms(ArrayList<String> list,String searchedKeywords)
     {
         String token;
-        boolean flag=false;
         String programName;
+        String keywords ="";
+        writer=new ProgramWriter(CodingActivity.this);
+
         ArrayList<String> matchedPrograms = new ArrayList<>();
         ArrayList<String> al;
-        map = new HashMap<>();
-        for(int i=0;i<list.size();i++)
-        {   al = new ArrayList<>();
-            programName = list.get(i);
-            System.out.println(list.get(i));
 
-            StringTokenizer st =  new StringTokenizer(programName," ");
+        boolean flag=false;
+
+        map = new HashMap<>();
+
+
+
+        for(int i=0;i<list.size();i++)
+        {
+            al = new ArrayList<>();
+            programName = list.get(i);
+
+            try {
+                keywords =writer.getKeyWords(CodingActivity.this.getAssets().open("Programs/"+programName));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println(programName+" "+keywords);
+
+            StringTokenizer st =  new StringTokenizer(programName+" "+keywords," ");
             while(st.hasMoreTokens())
             { token= st.nextToken();
                 al.add(token.toUpperCase());
@@ -286,6 +348,7 @@ else {
         return matchedPrograms;
     }
     }
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     //Array for ListView
     ArrayList<String>  getListPrograms()
@@ -323,6 +386,24 @@ else {
             e.printStackTrace();
         }
         return arrayList;
+
+    }
+
+//************************************************************************************************************************************************************************
+    void searchList(EditText searchText,ListView listView,ArrayList<String> listArray)
+    {
+        String searchString = searchText.getText().toString();
+        if (searchString.equals("")) {
+            al1 = listArray;
+        } else {
+            al1 = searchPrograms(listArray, searchString);
+
+        }
+        ArrayAdapter adapter1 = new ArrayAdapter<>(CodingActivity.this, R.layout.list_view_type, al1);
+
+        listView.setAdapter(adapter1);
+
+        adapter1.notifyDataSetChanged();
     }
 
 
