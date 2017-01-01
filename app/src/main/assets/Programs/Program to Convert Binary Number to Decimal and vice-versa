@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <math.h>
+int convertBinaryToDecimal(long long n);
+long long convertDecimalToBinary(int n);
+
+int main()
+{
+    int num;
+    long long n;
+    printf("Enter a binary number: ");
+    scanf("%lld", &n);
+    printf("%lld in binary = %d in decimal", n, convertBinaryToDecimal(n));
+
+        printf("Enter a decimal number: ");
+        scanf("%d", &num);
+        printf("%d in decimal = %lld in binary", n, convertDecimalToBinary(num));
+    return 0;
+}
+
+int convertBinaryToDecimal(long long n)
+{
+    int decimalNumber = 0, i = 0, remainder;
+    while (n!=0)
+    {
+        remainder = n%10;
+        n /= 10;
+        decimalNumber += remainder*pow(2,i);
+        ++i;
+    }
+    return decimalNumber;
+}
+long long convertDecimalToBinary(int n)
+{
+    long long binaryNumber = 0;
+    int remainder, i = 1, step = 1;
+
+    while (n!=0)
+    {
+        remainder = n%2;
+        printf("Step %d: %d/2, Remainder = %d, Quotient = %d\n", step++, n, remainder, n/2);
+        n /= 2;
+        binaryNumber += remainder*i;
+        i *= 10;
+    }
+    return binaryNumber;
+}
+~Output
+Enter a binary number: 110110111
+110110111 in binary = 439
+Enter a decimal number: 19
+Step 1: 19/2, Remainder = 1, Quotient = 9
+Step 2: 9/2, Remainder = 1, Quotient = 4
+Step 3: 4/2, Remainder = 0, Quotient = 2
+Step 4: 2/2, Remainder = 0, Quotient = 1
+Step 5: 1/2, Remainder = 1, Quotient = 0
+19 in decimal = 10011 in binary
+====
+38
+****
+functions convert convertor conversion number bin dec math maths mathematics

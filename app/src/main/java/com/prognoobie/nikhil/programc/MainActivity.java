@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.util.Linkify;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         ImageView codingImage = (ImageView) findViewById(R.id.main_coding);
         ImageView quesImage = (ImageView) findViewById(R.id.main_quesans);
         ImageView aboutusImage = (ImageView) findViewById(R.id.main_aboutus);
+
 
         //Listener
         logoImage.setOnClickListener(new View.OnClickListener(){

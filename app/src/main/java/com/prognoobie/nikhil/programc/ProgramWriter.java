@@ -46,8 +46,8 @@ public class ProgramWriter {
 
             while ((line = reader.readLine()) != null) {
 
-                    if(!line.equals("====")){
-                        if(line.length()>1 && (line.charAt(0)=='~'|| !writerFlag))
+                    if(!line.equals("====")&&!line.equals("****")){
+                        if(line.length()>0 && (line.charAt(0)=='~'|| !writerFlag))
                            {
                                 writerFlag=false;
                                 text2.append(line);

@@ -45,6 +45,7 @@ public class CodingActivity extends AppCompatActivity {
     String[] program = new String[3];
 
     boolean downloadFlag= false;
+    int backFlag = 0;
     boolean searchBarVisibilityFlag = false;
 
 
@@ -124,6 +125,17 @@ public class CodingActivity extends AppCompatActivity {
                 if(i==keyEvent.KEYCODE_ENTER)
                 {
                     searchList(searchText,listView,listArray);
+                }
+                else if(i==keyEvent.KEYCODE_BACK)
+                {
+                    Intent intent;
+                        intent = new Intent(getApplicationContext(),MainActivity.class);
+
+
+
+
+                    startActivity(intent);
+                            finish();
                 }
                 return true;
             }
@@ -376,7 +388,10 @@ else {
 
 
             for(int i=0;i<indexesOfPrograms.length;i++)
-            {   if(!indexesOfPrograms[i].equals("Quesans"))
+            {
+                System.out.println("I: "+i+" "+indexesOfPrograms[i]);
+
+                if(!indexesOfPrograms[i].equals("Quesans"))
                      {
                            al.add(indexesOfPrograms[i]);
                             arrayList.add(indexesOfPrograms[i]);
